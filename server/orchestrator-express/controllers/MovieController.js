@@ -1,21 +1,41 @@
 // const Movie = require('../models/movie');
 const axios = require('axios');
+const Redis = require('ioredis');
+const redis = new Redis();
 
 const baseURL = 'http://localhost:4001';
 
 class MovieController {
   static findAll(req, res, next) {
-    axios({
-      url: baseURL + '/movies',
-      method: 'GET',
-    })
-      .then(({ data }) => {
+    // Cek ada data atau tidak di redis
+    redis.get('movies').then((result) => {
+      // Jika tidak ada data
+      if (!result) {
+        // Lakukan Request ke server
+        console.log('ORCHESTRATOR MEMINTA DATA MOVIES DARI SERVICES');
+        axios({
+          url: baseURL + '/movies',
+          method: 'GET',
+        })
+          .then(({ data }) => {
+            // simpan data yang didapat kedalam Redis
+            redis.set('movies', JSON.stringify(data));
+            // kemudian mengembalikan respon ke layar
+            res.status(200).json(data);
+          })
+          .catch((err) => {
+            next(err);
+          });
+      } else {
+        // Jika data Redis ada data
+        console.log('ORCHESTRATOR KIRIM DATA MOVIES DARI REDIS');
+        const data = JSON.parse(result);
         res.status(200).json(data);
-      })
-      .catch((err) => {
-        next(err);
-      });
+      }
+    });
   }
+
+  // Ketika melakukan Update data makan redis di reset kembali
 
   static addMovie(req, res, next) {
     const { title, overview, poster_path, popularity, tags } = req.body;
@@ -32,6 +52,7 @@ class MovieController {
       },
     })
       .then(({ data }) => {
+        redis.del('movies');
         res.status(201).json(data);
       })
       .catch((err) => {
@@ -47,6 +68,7 @@ class MovieController {
       method: 'GET',
     })
       .then(({ data }) => {
+        redis.del('movies');
         if (data.length === 0) {
           throw { name: 'NotFound' };
         } else {
@@ -74,6 +96,7 @@ class MovieController {
       },
     })
       .then(({ data }) => {
+        redis.del('movies');
         res.status(200).json(data);
       })
       .catch((err) => {
@@ -89,6 +112,7 @@ class MovieController {
       method: 'DELETE',
     })
       .then(({ data }) => {
+        redis.del('movies');
         res.status(200).json(data);
       })
       .catch((err) => {
