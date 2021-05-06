@@ -1,22 +1,24 @@
 const TvSeries = require('../models/tvseries');
 
 class TvSeriesController {
-  static async findAll(req, res) {
+  static async findAll(req, res, next) {
     try {
       const tvseries = await TvSeries.findAll();
       res.status(200).json(tvseries);
     } catch (error) {
       console.log(error);
+      next(error);
     }
   }
 
-  static async addTvSeries(req, res) {
+  static async addTvSeries(req, res, next) {
     try {
       const newTvSeries = req.body;
       const TvSeriesInput = await TvSeries.addTvSeries(newTvSeries);
       res.status(201).json(TvSeriesInput);
     } catch (error) {
       console.log(error);
+      next(error);
     }
   }
 
