@@ -3,7 +3,7 @@ function errHandler(err, req, res, next) {
     res.status(404).json({ message: 'Data Not Found' });
   } else {
     const { response } = err;
-    console.log(response);
+    // console.log(response);
     res
       .status(response.status || 500)
       .json({ message: response.data.message || 'Internal Server Error' });

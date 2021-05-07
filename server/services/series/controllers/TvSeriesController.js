@@ -56,7 +56,7 @@ class TvSeriesController {
       const id = req.params.id;
       const deletedTvSeries = await TvSeries.deleteTvSeries(id);
       if (deletedTvSeries.value === null) {
-        throw { name: 'NotFounds' };
+        throw { name: 'NotFound' };
       } else {
         res.status(200).json(deletedTvSeries);
       }
