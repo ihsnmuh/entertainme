@@ -1,14 +1,12 @@
 function errHandler(err, req, res, next) {
-  switch (err.name) {
-    case 'Unauthorized':
-      res.status(401).json({ message: 'Unauthorized Access' });
-      break;
-    case 'NotFound':
-      res.status(404).json({ message: 'Data Not Found' });
-      break;
-    default:
-      res.status(500).json({ message: 'Internal server error' });
-      break;
+  if (err.name === 'NotFound') {
+    res.status(404).json({ message: 'Data Not Found' });
+  } else {
+    const { response } = err;
+    console.log(response);
+    res
+      .status(response.status || 500)
+      .json({ message: response.data.message || 'Internal Server Error' });
   }
 }
 

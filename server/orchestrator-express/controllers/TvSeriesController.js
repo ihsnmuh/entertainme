@@ -108,6 +108,7 @@ class TvSeriesController {
         res.status(200).json(data);
       })
       .catch((err) => {
+        // console.log(err);
         next(err);
       });
   }

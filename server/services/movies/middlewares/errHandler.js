@@ -1,8 +1,7 @@
 function errHandler(err, req, res, next) {
+  console.log(err);
+
   switch (err.name) {
-    case 'Unauthorized':
-      res.status(401).json({ message: 'Unauthorized Access' });
-      break;
     case 'NotFound':
       res.status(404).json({ message: 'Data Not Found' });
       break;
