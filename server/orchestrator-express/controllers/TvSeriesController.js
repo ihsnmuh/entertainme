@@ -19,6 +19,7 @@ class TvSeriesController {
             res.status(200).json(data);
           })
           .catch((err) => {
+            console.log(err);
             next(err);
           });
       } else {
@@ -60,7 +61,6 @@ class TvSeriesController {
       method: 'GET',
     })
       .then(({ data }) => {
-        redis.del('tvseries');
         if (data.length === 0) {
           throw { name: 'NotFound' };
         } else {

@@ -68,7 +68,6 @@ class MovieController {
       method: 'GET',
     })
       .then(({ data }) => {
-        redis.del('movies');
         if (data.length === 0) {
           throw { name: 'NotFound' };
         } else {
