@@ -54,8 +54,8 @@ const resolvers = {
           await redis.set('tvseries', JSON.stringify(tvSeries.data));
 
           const allDataCache = {
-            movies: JSON.parse(movies.data),
-            tvSeries: JSON.parse(tvSeries.data),
+            movies: JSON.parse(JSON.stringify(movies.data)),
+            tvSeries: JSON.parse(JSON.stringify(tvSeries.data)),
           };
           return allDataCache;
         } else if (!moviesCache) {
@@ -66,8 +66,10 @@ const resolvers = {
 
           await redis.set('movies', JSON.stringify(movies.data));
 
+          console.log(movies.data, "<<<<<<<<<<< Movies");
+
           const allDataCache = {
-            movies: JSON.parse(movies.data),
+            movies: JSON.parse(JSON.stringify(movies.data)),
             tvSeries: JSON.parse(seriesCache),
           };
 
@@ -80,9 +82,11 @@ const resolvers = {
 
           await redis.set('tvseries', JSON.stringify(tvSeries.data));
 
+          console.log(tvSeries.data, "<<<<<<<<<<< TV SERIES");
+
           const allDataCache = {
             movies: JSON.parse(moviesCache),
-            tvSeries: JSON.parse(tvSeries.data),
+            tvSeries: JSON.parse(JSON.stringify(tvSeries.data)),
           };
 
           return allDataCache;
