@@ -1,12 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import { favoritesVar } from '../../graphql/vars';
+import { useReactiveVar } from '@apollo/client';
+import CardData from '../Component/CardFavorite';
 
 export default function FavoritesScreen({ navigation }) {
+  const favorites = useReactiveVar(favoritesVar);
+
+  console.log(favorites);
   return (
     <>
       <View style={styles.container}>
         <Text>Halaman Favorites</Text>
+        {/* <Text>{JSON.stringify(favorites, null, 2)}</Text> */}
+        <FlatList
+          data={favorites}
+          renderItem={({ item }) => (
+            <CardData navigation={navigation} item={item} key={favorites._id} />
+          )}
+          keyExtractor={(item) => item._id.toString()}
+          horizontal={false}
+          showsHorizontalScrollIndicator={false}
+        />
         <StatusBar style='auto' />
       </View>
     </>

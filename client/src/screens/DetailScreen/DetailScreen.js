@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
+import { favoritesVar } from '../../graphql/vars';
 import {
   GET_DETAIL_MOVIE,
   GET_DETAIL_TVSERIES,
@@ -14,6 +15,7 @@ import {
 
 export default function DetailScreen({ navigation, route }) {
   const { id, typename } = route.params;
+  let detail;
 
   const [deleteMovie] = useMutation(DELETE_MOVIE, {
     refetchQueries: [
@@ -27,6 +29,10 @@ export default function DetailScreen({ navigation, route }) {
     onCompleted: () => {
       navigation.replace('Home');
       console.log('Movie Berhasil Di delete');
+      const favorites = favoritesVar();
+      let filtered = favorites.filter((data) => data._id !== detail._id);
+      const newUpdate = [...filtered];
+      favoritesVar(newUpdate);
     },
   });
 
@@ -42,12 +48,14 @@ export default function DetailScreen({ navigation, route }) {
     onCompleted: () => {
       navigation.replace('Home');
       console.log('Series Berhasil Di delete');
+      const favorites = favoritesVar();
+      let filtered = favorites.filter((data) => data._id !== detail._id);
+      const newUpdate = [...filtered];
+      favoritesVar(newUpdate);
     },
   });
 
   console.log(id, typename);
-
-  let detail;
 
   if (typename === 'MovieEntertainme' || typename === 'Movie') {
     let { loading, error, data } = useQuery(GET_DETAIL_MOVIE, {
@@ -106,6 +114,15 @@ export default function DetailScreen({ navigation, route }) {
     }
   };
 
+  const favoriteData = () => {
+    console.log('Masuk Fav');
+    console.log(favoritesVar(), '<<<< Masuk');
+    const favorites = favoritesVar();
+    const newFavorite = [...favorites, detail];
+    console.log(newFavorite, '<<<<< Baru');
+    favoritesVar(newFavorite);
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -133,6 +150,9 @@ export default function DetailScreen({ navigation, route }) {
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonDelete} onPress={deleteData}>
             <Text style={styles.buttonText}>Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonDelete} onPress={favoriteData}>
+            <Text style={styles.buttonText}>Favorite</Text>
           </TouchableOpacity>
         </View>
         <StatusBar style='auto' />

@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
+import { favoritesVar } from '../../graphql/vars';
 import {
   StyleSheet,
   Text,
@@ -18,6 +19,13 @@ import {
 
 export default function EditScreen({ navigation, route }) {
   const { dataEdit, typeName } = route.params;
+  const [editData, setEditData] = useState({
+    title: dataEdit.title,
+    overview: dataEdit.overview,
+    poster_path: dataEdit.poster_path,
+    popularity: dataEdit.popularity,
+    tags: dataEdit.tags,
+  });
 
   const [editMovie] = useMutation(EDIT_MOVIE, {
     refetchQueries: [
@@ -31,6 +39,20 @@ export default function EditScreen({ navigation, route }) {
     onCompleted: () => {
       navigation.replace('Home');
       console.log('Movie Berhasil diedit');
+      const dataNew = {
+        __typename: typeName,
+        _id: dataEdit._id,
+        title: editData.title,
+        overview: editData.overview,
+        poster_path: editData.poster_path,
+        popularity: +editData.popularity,
+        tags: editData.tags,
+      };
+      const favorites = favoritesVar();
+      let filtered = favorites.filter((data) => data._id !== dataEdit._id);
+      // console.log(filtered, '<<<<<<< filter');
+      const newUpdate = [...filtered, dataNew];
+      favoritesVar(newUpdate);
     },
   });
 
@@ -46,15 +68,21 @@ export default function EditScreen({ navigation, route }) {
     onCompleted: () => {
       navigation.replace('Home');
       console.log('Serie Berhasil diedit');
+      const dataNew = {
+        __typename: typeName,
+        _id: dataEdit._id,
+        title: editData.title,
+        overview: editData.overview,
+        poster_path: editData.poster_path,
+        popularity: +editData.popularity,
+        tags: editData.tags,
+      };
+      const favorites = favoritesVar();
+      let filtered = favorites.filter((data) => data._id !== dataEdit._id);
+      // console.log(filtered, '<<<<<<< filter');
+      const newUpdate = [...filtered, dataNew];
+      favoritesVar(newUpdate);
     },
-  });
-
-  const [editData, setEditData] = useState({
-    title: dataEdit.title,
-    overview: dataEdit.overview,
-    poster_path: dataEdit.poster_path,
-    popularity: dataEdit.popularity,
-    tags: dataEdit.tags,
   });
 
   const AddNewEdit = () => {
