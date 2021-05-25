@@ -4,7 +4,7 @@ const Redis = require('ioredis');
 const redis = new Redis();
 
 const typeDefs = gql`
-  type MovieEntertaime {
+  type MovieEntertainme {
     _id: ID
     title: String
     overview: String
@@ -13,7 +13,7 @@ const typeDefs = gql`
     tags: [String]
   }
 
-  type SeriesEntertaime {
+  type SeriesEntertainme {
     _id: ID
     title: String
     overview: String
@@ -23,8 +23,8 @@ const typeDefs = gql`
   }
 
   type allData {
-    movies: [MovieEntertaime]
-    tvSeries: [SeriesEntertaime]
+    movies: [MovieEntertainme]
+    tvSeries: [SeriesEntertainme]
   }
 
   extend type Query {
@@ -38,6 +38,8 @@ const resolvers = {
       try {
         const moviesCache = await redis.get('movies');
         const seriesCache = await redis.get('tvseries');
+
+        console.log();
 
         if (!moviesCache && !seriesCache) {
           const movies = await axios({
@@ -66,7 +68,7 @@ const resolvers = {
 
           await redis.set('movies', JSON.stringify(movies.data));
 
-          console.log(movies.data, "<<<<<<<<<<< Movies");
+          console.log(movies.data, '<<<<<<<<<<< Movies');
 
           const allDataCache = {
             movies: JSON.parse(JSON.stringify(movies.data)),
@@ -82,7 +84,7 @@ const resolvers = {
 
           await redis.set('tvseries', JSON.stringify(tvSeries.data));
 
-          console.log(tvSeries.data, "<<<<<<<<<<< TV SERIES");
+          console.log(tvSeries.data, '<<<<<<<<<<< TV SERIES');
 
           const allDataCache = {
             movies: JSON.parse(moviesCache),
@@ -91,9 +93,8 @@ const resolvers = {
 
           return allDataCache;
         } else {
-
-          const movies = JSON.parse(moviesCache)
-          const tvSeries = JSON.parse(seriesCache)
+          const movies = JSON.parse(moviesCache);
+          const tvSeries = JSON.parse(seriesCache);
 
           const allDataCache = {
             movies: movies,

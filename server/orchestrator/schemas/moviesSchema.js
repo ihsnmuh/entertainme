@@ -20,23 +20,18 @@ const typeDefs = gql`
     movie(_id: ID): [Movie]
   }
 
+  input NewMovie {
+    title: String
+    overview: String
+    poster_path: String
+    popularity: Float
+    tags: [String]
+  }
+
   extend type Mutation {
     # Mutation Movies
-    addMovie(
-      title: String,
-      overview: String,
-      poster_path: String,
-      popularity: Float,
-      tags: [String]
-    ): Movie
-    updateMovie(
-      _id: ID,
-      title: String,
-      overview: String,
-      poster_path: String,
-      popularity: Float,
-      tags: [String]
-    ): Movie
+    addMovie(newMovie: NewMovie): Movie
+    updateMovie(_id: ID, updateMovie: NewMovie): Movie
     deleteMovie(_id: ID): Movie
   }
 `;
@@ -49,7 +44,7 @@ const resolvers = {
         const moviesCache = await redis.get('movies');
 
         if (!moviesCache) {
-          console.log("dari Server");
+          console.log('dari Server');
           const { data } = await axios({
             method: 'GET',
             url: 'http://localhost:4001/movies',
@@ -58,7 +53,7 @@ const resolvers = {
           return data;
         } else {
           const data = JSON.parse(moviesCache);
-          console.log("dari Cache");
+          console.log('dari Cache');
           return data;
         }
       } catch (error) {
@@ -89,11 +84,11 @@ const resolvers = {
     // Mutation Movies
     addMovie: (_, args) => {
       const newMovie = {
-        title: args.title,
-        overview: args.overview,
-        poster_path: args.poster_path,
-        popularity: args.popularity,
-        tags: args.tags,
+        title: args.newMovie.title,
+        overview: args.newMovie.overview,
+        poster_path: args.newMovie.poster_path,
+        popularity: args.newMovie.popularity,
+        tags: args.newMovie.tags,
       };
 
       return axios({
@@ -116,11 +111,11 @@ const resolvers = {
       const { _id } = args;
 
       const updateMovie = {
-        title: args.title,
-        overview: args.overview,
-        poster_path: args.poster_path,
-        popularity: args.popularity,
-        tags: args.tags,
+        title: args.updateMovie.title,
+        overview: args.updateMovie.overview,
+        poster_path: args.updateMovie.poster_path,
+        popularity: args.updateMovie.popularity,
+        tags: args.updateMovie.tags,
       };
 
       return axios({

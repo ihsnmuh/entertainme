@@ -20,23 +20,18 @@ const typeDefs = gql`
     serie(_id: ID): [Series]
   }
 
+  input NewTvSeries {
+    title: String
+    overview: String
+    poster_path: String
+    popularity: Float
+    tags: [String]
+  }
+
   extend type Mutation {
     # Mutation tvSeries
-    addTvSeries(
-      title: String,
-      overview: String,
-      poster_path: String,
-      popularity: Float,
-      tags: [String]
-    ): Series
-    updateTvSeries(
-      _id: ID,
-      title: String,
-      overview: String,
-      poster_path: String,
-      popularity: Float,
-      tags: [String]
-    ): Series
+    addTvSeries(newTvSeries: NewTvSeries): Series
+    updateTvSeries(_id: ID, updateTvSeries: NewTvSeries): Series
     deleteTvSeries(_id: ID): Series
   }
 `;
@@ -89,11 +84,11 @@ const resolvers = {
     // Mutation TV SERIES
     addTvSeries: (_, args) => {
       const newSeries = {
-        title: args.title,
-        overview: args.overview,
-        poster_path: args.poster_path,
-        popularity: args.popularity,
-        tags: args.tags,
+        title: args.newTvSeries.title,
+        overview: args.newTvSeries.overview,
+        poster_path: args.newTvSeries.poster_path,
+        popularity: args.newTvSeries.popularity,
+        tags: args.newTvSeries.tags,
       };
 
       return axios({
@@ -116,11 +111,11 @@ const resolvers = {
       const { _id } = args;
 
       const updateTvSeries = {
-        title: args.title,
-        overview: args.overview,
-        poster_path: args.poster_path,
-        popularity: args.popularity,
-        tags: args.tags,
+        title: args.updateTvSeries.title,
+        overview: args.updateTvSeries.overview,
+        poster_path: args.updateTvSeries.poster_path,
+        popularity: args.updateTvSeries.popularity,
+        tags: args.updateTvSeries.tags,
       };
 
       return axios({
