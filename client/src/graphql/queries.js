@@ -110,3 +110,29 @@ export const DELETE_SERIE = gql`
     }
   }
 `;
+
+export const EDIT_MOVIE = gql`
+  mutation UpdateMovies($input: NewMovie, $id: ID) {
+    updateMovie(updateMovie: $input, _id: $id) {
+      _id
+      title
+      overview
+      poster_path
+      popularity
+      tags
+    }
+  }
+`;
+
+export const EDIT_SERIE = gql`
+  mutation UpdateTvSeries($input: NewTvSeries, $id: ID) {
+    updateTvSeries(updateTvSeries: $input, _id: $id) {
+      _id
+      title
+      overview
+      poster_path
+      popularity
+      tags
+    }
+  }
+`;

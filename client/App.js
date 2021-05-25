@@ -16,6 +16,7 @@ import DetailScreen from './src/screens/DetailScreen/DetailScreen';
 import AddScreen from './src/screens/AddScreen/AddScreen';
 import AddMovieScreen from './src/screens/AddScreen/AddMovieScreen';
 import AddSeriesScreen from './src/screens/AddScreen/AddSeriesScreen';
+import EditScreen from './src/screens/EditScreen/EditScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -123,6 +124,11 @@ export default function App() {
           <Stack.Screen
             name='AddSerie'
             component={AddSeriesScreen}
+            // options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='EditMovie'
+            component={EditScreen}
             // options={{ headerShown: false }}
           />
           <Stack.Screen

@@ -71,7 +71,13 @@ export default function DetailScreen({ navigation, route }) {
   console.log(detail, '<<<<<<<<<<< DATAAAA');
 
   const editData = () => {
+    console.log(detail.__typename, '<<< Type diedit');
+    console.log(detail._id, '<<< ID diedit');
     console.log('Tombol Edit');
+    navigation.navigate('EditMovie', {
+      dataEdit: detail,
+      typeName: detail.__typename,
+    });
   };
 
   const deleteData = () => {
