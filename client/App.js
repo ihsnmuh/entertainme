@@ -17,6 +17,7 @@ import AddScreen from './src/screens/AddScreen/AddScreen';
 import AddMovieScreen from './src/screens/AddScreen/AddMovieScreen';
 import AddSeriesScreen from './src/screens/AddScreen/AddSeriesScreen';
 import EditScreen from './src/screens/EditScreen/EditScreen';
+import LoadingScreen from './src/screens/LoadingScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

@@ -50,18 +50,32 @@ export default function AddMovieScreen({ navigation }) {
 
   const AddNewInput = () => {
     console.log('Data masuk');
-    // alert(JSON.stringify(input));
-    addNewMovie({
-      variables: {
-        input: {
-          title: input.title,
-          overview: input.overview,
-          poster_path: input.poster_path,
-          popularity: +input.popularity,
-          tags: input.tags.split(','),
+    if (
+      !input.title ||
+      !input.overview ||
+      !input.poster_path ||
+      !input.popularity ||
+      !input.tags
+    ) {
+      ToastAndroid.show(
+        `Please input movie data`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+    } else {
+      // alert(JSON.stringify(input));
+      addNewMovie({
+        variables: {
+          input: {
+            title: input.title,
+            overview: input.overview,
+            poster_path: input.poster_path,
+            popularity: +input.popularity,
+            tags: input.tags.split(','),
+          },
         },
-      },
-    });
+      });
+    }
   };
 
   if (loading) return <Text>Loading... </Text>;

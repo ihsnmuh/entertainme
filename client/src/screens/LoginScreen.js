@@ -1,7 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
+import netflix from '../../assets/netflix.gif';
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function LoginScreen({ navigation }) {
   const moveToMain = () => navigation.replace('Home');
@@ -9,7 +18,26 @@ export default function LoginScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Text>Halaman Login</Text>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            marginVertical: 20,
+            borderBottomWidth: 3,
+            borderBottomColor: '#db0000',
+          }}
+        >
+          NETPLIK
+        </Text>
+        <Image
+          source={netflix}
+          style={{
+            width: windowWidth - 80,
+            height: windowWidth - 100,
+            alignItems: 'center',
+            margin: 20,
+          }}
+        />
         <TouchableOpacity style={styles.button} onPress={moveToMain}>
           <Text style={styles.buttonText}>Home</Text>
         </TouchableOpacity>
@@ -27,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#2978b5',
+    backgroundColor: '#db0000',
     paddingHorizontal: 16,
     paddingVertical: 8,
     width: 150,

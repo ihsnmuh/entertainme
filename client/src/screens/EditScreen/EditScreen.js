@@ -105,7 +105,7 @@ export default function EditScreen({ navigation, route }) {
             overview: editData.overview,
             poster_path: editData.poster_path,
             popularity: +editData.popularity,
-            tags: editData.tags.split(','),
+            tags: editData.tags,
           },
           id: dataEdit._id,
         },
@@ -118,7 +118,7 @@ export default function EditScreen({ navigation, route }) {
             overview: editData.overview,
             poster_path: editData.poster_path,
             popularity: +editData.popularity,
-            tags: editData.tags.split(','),
+            tags: editData.tags,
           },
           id: dataEdit._id,
         },
@@ -238,7 +238,9 @@ export default function EditScreen({ navigation, route }) {
           style={styles.textInput}
           label='Tags (contoh:Action,Horor)'
           value={editData.tags.toString()}
-          onChangeText={(text) => setEditData({ ...editData, tags: text })}
+          onChangeText={(text) =>
+            setEditData({ ...editData, tags: text.split(',') })
+          }
         />
         {/* perubahan array jangan disini kalo mau */}
         <TouchableOpacity style={styles.button} onPress={AddNewEdit}>

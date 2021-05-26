@@ -13,6 +13,7 @@ import {
 import { useQuery } from '@apollo/client';
 import CardData from '../Component/Card';
 import { GET_HOMEPAGE_DATA } from '../../graphql/queries';
+import LoadingScreen from '../LoadingScreen';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -27,7 +28,7 @@ export default function HomeScreen({ navigation }) {
 
   const moveToMovies = () => navigation.navigate('Movies');
 
-  if (loading) return <Text>Loading... </Text>;
+  if (loading) return <LoadingScreen />;
   if (error) return <Text>Server Error</Text>;
 
   return (

@@ -49,22 +49,35 @@ export default function AddSerieScreen({ navigation }) {
   });
 
   const AddNewInput = () => {
-    console.log('Data masuk');
-    // alert(JSON.stringify(input));
+    if (
+      !input.title ||
+      !input.overview ||
+      !input.poster_path ||
+      !input.popularity ||
+      !input.tags
+    ) {
+      ToastAndroid.show(
+        `Please input series data`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+    } else {
+      console.log('Data masuk');
+      // alert(JSON.stringify(input));
+      let newData = {
+        title: input.title,
+        overview: input.overview,
+        poster_path: input.poster_path,
+        popularity: +input.popularity,
+        tags: input.tags.split(','),
+      };
 
-    let newData = {
-      title: input.title,
-      overview: input.overview,
-      poster_path: input.poster_path,
-      popularity: +input.popularity,
-      tags: input.tags.split(','),
-    };
-
-    addNewSerie({
-      variables: {
-        input: newData,
-      },
-    });
+      addNewSerie({
+        variables: {
+          input: newData,
+        },
+      });
+    }
   };
 
   if (loading) return <Text>Loading... </Text>;

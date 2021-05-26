@@ -6,7 +6,9 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Dimensions,
   ToastAndroid,
+  ScrollView,
 } from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 import { favoritesVar } from '../../graphql/vars';
@@ -19,6 +21,8 @@ import {
   DELETE_MOVIE,
   DELETE_SERIE,
 } from '../../graphql/queries';
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function DetailScreen({ navigation, route }) {
   const { id, typename } = route.params;
@@ -151,6 +155,7 @@ export default function DetailScreen({ navigation, route }) {
         ToastAndroid.SHORT,
         ToastAndroid.BOTTOM
       );
+      navigation.replace('Home');
     } else {
       // console.log('sudah Ada Didalam Favorite');
       ToastAndroid.show(
@@ -163,55 +168,105 @@ export default function DetailScreen({ navigation, route }) {
 
   return (
     <>
-      <View style={styles.container}>
-        <Text>Halaman Detail</Text>
-        {/* <Text>{JSON.stringify(detail)}</Text> */}
-        <Text>{detail.title}</Text>
-        <Image
-          style={styles.image}
-          source={{
-            uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${detail.poster_path}`,
-          }}
-        />
-        <Text>{detail.overview}</Text>
-        <Text>{detail.popularity}</Text>
-        {detail.tags.map((tag, index) => {
-          return (
-            <Text key={index}>
-              {index + 1}. {tag}
-            </Text>
-          );
-        })}
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity style={styles.buttonEdit} onPress={editData}>
-            <Text style={styles.buttonText}>Edit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonDelete} onPress={deleteData}>
-            <Text style={styles.buttonText}>Delete</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonDelete} onPress={favoriteData}>
-            <Text style={styles.buttonText}>Favorite</Text>
-          </TouchableOpacity>
+      <ScrollView>
+        <View style={styles.container}>
+          {/* <Text>Halaman Detail</Text> */}
+          {/* <Text>{JSON.stringify(detail)}</Text> */}
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: 'bold',
+              marginVertical: 20,
+              borderBottomWidth: 3,
+              borderBottomColor: '#db0000',
+            }}
+          >
+            {detail.title}
+          </Text>
+          <Image
+            style={styles.image}
+            source={{
+              uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${detail.poster_path}`,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              width: (windowWidth * 2) / 3,
+              marginVertical: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: '#db0000',
+            }}
+          >
+            Overview
+          </Text>
+          <Text style={{ width: (windowWidth * 2) / 3, marginVertical: 10 }}>
+            {detail.overview}
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              width: (windowWidth * 2) / 3,
+              marginVertical: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: '#db0000',
+            }}
+          >
+            Popularity
+          </Text>
+          <Text>{detail.popularity}</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              width: (windowWidth * 2) / 3,
+              marginVertical: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: '#db0000',
+            }}
+          >
+            Tags
+          </Text>
+          {detail.tags.map((tag, index) => {
+            return (
+              <Text key={index} style={{ width: (windowWidth * 2) / 3 }}>
+                {index + 1}. {tag}
+              </Text>
+            );
+          })}
         </View>
-        <StatusBar style='auto' />
+      </ScrollView>
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <TouchableOpacity style={styles.buttonEdit} onPress={editData}>
+          <Text style={styles.buttonText}>Edit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonDelete} onPress={deleteData}>
+          <Text style={styles.buttonText}>Delete</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonFavorite} onPress={favoriteData}>
+          <Text style={styles.buttonText}>Favorite</Text>
+        </TouchableOpacity>
       </View>
+      <StatusBar style='auto' />
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   image: {
-    width: 200,
-    height: 300,
+    width: (windowWidth * 2) / 3,
+    height: windowWidth,
   },
   buttonEdit: {
-    backgroundColor: '#2978b5',
+    backgroundColor: 'black',
     paddingHorizontal: 8,
     paddingVertical: 4,
     width: 100,
@@ -227,6 +282,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 10,
     marginHorizontal: 10,
+  },
+  buttonFavorite: {
+    backgroundColor: '#303030',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    width: 100,
+    borderRadius: 5,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    borderWidth: 2,
+    borderColor: '#db0000',
   },
   buttonText: {
     textAlign: 'center',
