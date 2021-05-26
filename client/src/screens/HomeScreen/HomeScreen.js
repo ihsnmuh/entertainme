@@ -8,10 +8,13 @@ import {
   Image,
   ScrollView,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import { useQuery } from '@apollo/client';
 import CardData from '../Component/Card';
 import { GET_HOMEPAGE_DATA } from '../../graphql/queries';
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function HomeScreen({ navigation }) {
   const { loading, error, data } = useQuery(GET_HOMEPAGE_DATA, {
@@ -30,11 +33,32 @@ export default function HomeScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Text>Halaman HOME</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text>Movies</Text>
+        {/* <Text>Halaman HOME</Text> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: 'black',
+            width: windowWidth,
+            marginBottom: 10,
+            borderBottomWidth: 3,
+            borderBottomColor: '#db0000',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: 'bold',
+              marginVertical: 10,
+              marginRight: 20,
+              marginHorizontal: 20,
+              color: '#fff',
+            }}
+          >
+            Movies
+          </Text>
           <TouchableOpacity style={styles.button} onPress={moveToMovies}>
-            <Text style={styles.buttonText}>All Movies</Text>
+            <Text style={styles.buttonText}>List Movies</Text>
           </TouchableOpacity>
         </View>
         {/* <Text>{JSON.stringify(data.entertainme.movies)}</Text> */}
@@ -56,10 +80,31 @@ export default function HomeScreen({ navigation }) {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text>TV Series</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: 'black',
+            width: windowWidth,
+            marginTop: 10,
+            marginBottom: 10,
+            borderBottomWidth: 3,
+            borderBottomColor: '#db0000',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: 'bold',
+              marginVertical: 10,
+              marginHorizontal: 20,
+              color: '#fff',
+            }}
+          >
+            Series
+          </Text>
           <TouchableOpacity style={styles.button} onPress={moveToTVSeries}>
-            <Text style={styles.buttonText}>All TV Series</Text>
+            <Text style={styles.buttonText}>List Series</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -72,10 +117,10 @@ export default function HomeScreen({ navigation }) {
           showsHorizontalScrollIndicator={false}
         />
         <TouchableOpacity
-          style={styles.button}
+          style={styles.buttonLogout}
           onPress={() => navigation.replace('Login')}
         >
-          <Text style={styles.buttonText}>Logout</Text>
+          <Text style={styles.buttonLogoutText}>Back</Text>
         </TouchableOpacity>
         <StatusBar style='auto' />
       </View>
@@ -91,10 +136,10 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#2978b5',
+    backgroundColor: '#fff',
     paddingHorizontal: 8,
-    paddingVertical: 4,
-    width: 100,
+    paddingVertical: 8,
+    width: 150,
     borderRadius: 5,
     marginVertical: 10,
     marginHorizontal: 10,
@@ -102,7 +147,22 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontSize: 14,
-    color: '#fff',
+    color: '#db0000',
+    fontWeight: 'bold',
+  },
+  buttonLogout: {
+    backgroundColor: 'black',
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    width: windowWidth,
+    // borderRadius: 5,
+    marginTop: 10,
+    marginHorizontal: 10,
+  },
+  buttonLogoutText: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: 'white',
     fontWeight: 'bold',
   },
 });

@@ -1,9 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 import { useQuery } from '@apollo/client';
 import { GET_MOVIES_DATA } from '../../graphql/queries';
 import CardDataCategory from '../Component/CardCategory';
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function MoviesScreen({ navigation }) {
   const { loading, error, data } = useQuery(GET_MOVIES_DATA);
@@ -15,7 +24,17 @@ export default function MoviesScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Text>Halaman Movies</Text>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            marginVertical: 20,
+            borderBottomWidth: 3,
+            borderBottomColor: '#db0000',
+          }}
+        >
+          List Movies
+        </Text>
         {/* <Text>{JSON.stringify(data)}</Text> */}
         <FlatList
           data={data.movies}

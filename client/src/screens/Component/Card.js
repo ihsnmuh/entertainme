@@ -14,7 +14,21 @@ const CardData = ({ navigation, item }) => {
           uri: `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.poster_path}`,
         }}
       />
-      <Text style={{ textAlign: 'center' }}>{item.title}</Text>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 13,
+          width: 150,
+          paddingVertical: 10,
+          fontWeight: 'bold',
+          backgroundColor: '#D6E0F0',
+          color: 'black',
+          borderBottomLeftRadius: 5,
+          borderBottomRightRadius: 5,
+        }}
+      >
+        {item.title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -37,6 +51,8 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 225,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
 });
 

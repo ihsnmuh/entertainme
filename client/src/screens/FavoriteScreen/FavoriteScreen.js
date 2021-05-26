@@ -18,7 +18,17 @@ export default function FavoritesScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Text>Halaman Favorites</Text>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            marginVertical: 20,
+            borderBottomWidth: 3,
+            borderBottomColor: '#db0000',
+          }}
+        >
+          Your Favorites
+        </Text>
         {/* <Text>{JSON.stringify(favorites, null, 2)}</Text> */}
         <FlatList
           data={favorites}

@@ -1,6 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 import { useQuery, useMutation } from '@apollo/client';
 import { favoritesVar } from '../../graphql/vars';
 import {
@@ -33,6 +40,11 @@ export default function DetailScreen({ navigation, route }) {
       let filtered = favorites.filter((data) => data._id !== detail._id);
       const newUpdate = [...filtered];
       favoritesVar(newUpdate);
+      ToastAndroid.show(
+        `${detail.title} has been Deleted`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
     },
   });
 
@@ -52,6 +64,11 @@ export default function DetailScreen({ navigation, route }) {
       let filtered = favorites.filter((data) => data._id !== detail._id);
       const newUpdate = [...filtered];
       favoritesVar(newUpdate);
+      ToastAndroid.show(
+        `${detail.title} has been Deleted`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
     },
   });
 
@@ -115,12 +132,33 @@ export default function DetailScreen({ navigation, route }) {
   };
 
   const favoriteData = () => {
-    console.log('Masuk Fav');
-    console.log(favoritesVar(), '<<<< Masuk');
+    // console.log('Masuk Fav');
+    // console.log(favoritesVar(), '<<<< Masuk');
     const favorites = favoritesVar();
-    const newFavorite = [...favorites, detail];
-    console.log(newFavorite, '<<<<< Baru');
-    favoritesVar(newFavorite);
+    let flag = false;
+    favorites.forEach((data) => {
+      if (data._id === detail._id) {
+        flag = true;
+      }
+    });
+
+    if (!flag) {
+      const newFavorite = [...favorites, detail];
+      console.log(newFavorite, '<<<<< Baru');
+      favoritesVar(newFavorite);
+      ToastAndroid.show(
+        `${detail.title} Added to Favorites`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+    } else {
+      // console.log('sudah Ada Didalam Favorite');
+      ToastAndroid.show(
+        `${detail.title} already exist in Favorites`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+    }
   };
 
   return (

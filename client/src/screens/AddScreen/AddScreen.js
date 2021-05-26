@@ -10,7 +10,7 @@ export default function AddScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Text>Halaman Add New</Text>
+        {/* <Text>Halaman Add New</Text> */}
         <TouchableOpacity style={styles.button} onPress={moveToAddMovie}>
           <Text style={styles.buttonText}>Add Movie</Text>
         </TouchableOpacity>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#2978b5',
+    backgroundColor: 'black',
     paddingHorizontal: 16,
     paddingVertical: 8,
     width: 150,

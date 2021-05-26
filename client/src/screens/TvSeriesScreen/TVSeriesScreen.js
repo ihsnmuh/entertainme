@@ -14,7 +14,17 @@ export default function TVSeriesScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Text>Halaman TV Series</Text>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            marginVertical: 20,
+            borderBottomWidth: 3,
+            borderBottomColor: '#db0000',
+          }}
+        >
+          List Series
+        </Text>
         <FlatList
           data={data.tvSeries}
           renderItem={({ item }) => (

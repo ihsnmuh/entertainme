@@ -120,16 +120,40 @@ export default function App() {
             name='AddMovie'
             component={AddMovieScreen}
             // options={{ headerShown: false }}
+            options={{
+              title: 'Add Movies',
+              headerTitleAlign: 'center',
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#db0000',
+              },
+            }}
           />
           <Stack.Screen
             name='AddSerie'
             component={AddSeriesScreen}
             // options={{ headerShown: false }}
+            options={{
+              title: 'Add Serie',
+              headerTitleAlign: 'center',
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#db0000',
+              },
+            }}
           />
           <Stack.Screen
             name='EditMovie'
             component={EditScreen}
             // options={{ headerShown: false }}
+            options={{
+              title: 'Edit',
+              headerTitleAlign: 'center',
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#db0000',
+              },
+            }}
           />
           <Stack.Screen
             name='Detail'
