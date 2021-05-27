@@ -16,6 +16,7 @@ import {
   GET_HOMEPAGE_DATA,
   GET_MOVIES_DATA,
 } from '../../graphql/queries';
+import LoadingScreen from '../LoadingScreen';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -78,7 +79,7 @@ export default function AddMovieScreen({ navigation }) {
     }
   };
 
-  if (loading) return <Text>Loading... </Text>;
+  if (loading) return <LoadingScreen />;
 
   return (
     <>

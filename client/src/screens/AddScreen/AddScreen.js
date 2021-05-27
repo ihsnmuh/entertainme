@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Appbar } from 'react-native-paper';
+import LoadingScreen from '../LoadingScreen';
 
 export default function AddScreen({ navigation }) {
   const moveToAddMovie = () => navigation.navigate('AddMovie');

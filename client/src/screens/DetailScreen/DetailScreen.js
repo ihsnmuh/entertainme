@@ -21,6 +21,7 @@ import {
   DELETE_MOVIE,
   DELETE_SERIE,
 } from '../../graphql/queries';
+import LoadingScreen from '../LoadingScreen';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -83,7 +84,7 @@ export default function DetailScreen({ navigation, route }) {
       variables: { input: id },
     });
 
-    if (loading) return <Text>Loading...</Text>;
+    if (loading) return <LoadingScreen />;
     if (error) return <Text>Error</Text>;
     console.log('Masuk Detail Movie');
     detail = data.movie[0];
@@ -92,7 +93,7 @@ export default function DetailScreen({ navigation, route }) {
       variables: { input: id },
     });
 
-    if (loading) return <Text>Loading...</Text>;
+    if (loading) return <LoadingScreen />;
     if (error) return <Text>Error</Text>;
     console.log('Masuk Detail Series');
     detail = data.serie[0];

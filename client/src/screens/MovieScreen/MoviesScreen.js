@@ -11,13 +11,14 @@ import {
 import { useQuery } from '@apollo/client';
 import { GET_MOVIES_DATA } from '../../graphql/queries';
 import CardDataCategory from '../Component/CardCategory';
+import LoadingScreen from '../LoadingScreen';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function MoviesScreen({ navigation }) {
   const { loading, error, data } = useQuery(GET_MOVIES_DATA);
 
-  if (loading) return <Text>Loading... </Text>;
+  if (loading) return <LoadingScreen />;
   if (error) return <Text>Server Error</Text>;
 
   // console.log(data);

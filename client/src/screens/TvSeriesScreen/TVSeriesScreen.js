@@ -4,11 +4,12 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { GET_SERIES_DATA } from '../../graphql/queries';
 import CardDataCategory from '../Component/CardCategory';
+import LoadingScreen from '../LoadingScreen';
 
 export default function TVSeriesScreen({ navigation }) {
   const { loading, error, data } = useQuery(GET_SERIES_DATA);
 
-  if (loading) return <Text>Loading... </Text>;
+  if (loading) return <LoadingScreen />;
   if (error) return <Text>Server Error</Text>;
 
   return (

@@ -16,6 +16,7 @@ import {
   GET_HOMEPAGE_DATA,
   GET_SERIES_DATA,
 } from '../../graphql/queries';
+import LoadingScreen from '../LoadingScreen';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -80,7 +81,7 @@ export default function AddSerieScreen({ navigation }) {
     }
   };
 
-  if (loading) return <Text>Loading... </Text>;
+  if (loading) return <LoadingScreen />;
 
   return (
     <>
