@@ -47,7 +47,8 @@ const resolvers = {
           console.log('dari Server');
           const { data } = await axios({
             method: 'GET',
-            url: 'http://localhost:4001/movies',
+            // url: 'http://localhost:4001/movies',
+            url: 'http://3.83.244.245:4001/movies',
           });
           await redis.set('movies', JSON.stringify(data));
           return data;
@@ -68,7 +69,8 @@ const resolvers = {
       // console.log(args);
       return axios({
         method: 'GET',
-        url: 'http://localhost:4001/movies/' + _id,
+        // url: 'http://localhost:4001/movies/' + _id,
+        url: 'http://3.83.244.245:4001/movies/' + _id,
       })
         .then(({ data }) => {
           console.log(data);
@@ -93,7 +95,8 @@ const resolvers = {
 
       return axios({
         method: 'POST',
-        url: 'http://localhost:4001/movies',
+        // url: 'http://localhost:4001/movies',
+        url: 'http://3.83.244.245:4001/movies',
         data: newMovie,
       })
         .then(({ data }) => {
@@ -120,7 +123,8 @@ const resolvers = {
 
       return axios({
         method: 'PUT',
-        url: 'http://localhost:4001/movies/' + `${_id}`,
+        // url: 'http://localhost:4001/movies/' + `${_id}`,
+        url: 'http://3.83.244.245:4001/movies/' + `${_id}`,
         data: updateMovie,
       })
         .then(({ data }) => {
@@ -140,7 +144,8 @@ const resolvers = {
 
       return axios({
         method: 'DELETE',
-        url: 'http://localhost:4001/movies/' + `${_id}`,
+        // url: 'http://localhost:4001/movies/' + `${_id}`,
+        url: 'http://3.83.244.245:4001/movies/' + `${_id}`,
       })
         .then(({ data }) => {
           redis.del('movies');

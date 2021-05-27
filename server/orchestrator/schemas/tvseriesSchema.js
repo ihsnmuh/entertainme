@@ -47,7 +47,8 @@ const resolvers = {
           console.log('dari Server');
           const { data } = await axios({
             method: 'GET',
-            url: 'http://localhost:4002/tvseries',
+            // url: 'http://localhost:4002/tvseries',
+            url: 'http://34.236.154.118:4002/tvseries',
           });
           await redis.set('tvseries', JSON.stringify(data));
           return data;
@@ -68,7 +69,8 @@ const resolvers = {
       // console.log(args);
       return axios({
         method: 'GET',
-        url: 'http://localhost:4002/tvseries/' + _id,
+        // url: 'http://localhost:4002/tvseries/' + _id,
+        url: 'http://34.236.154.118:4002/tvseries/' + _id,
       })
         .then(({ data }) => {
           console.log(data);
@@ -93,7 +95,8 @@ const resolvers = {
 
       return axios({
         method: 'POST',
-        url: 'http://localhost:4002/tvseries',
+        // url: 'http://localhost:4002/tvseries',
+        url: 'http://34.236.154.118:4002/tvseries',
         data: newSeries,
       })
         .then(({ data }) => {
@@ -120,7 +123,8 @@ const resolvers = {
 
       return axios({
         method: 'PUT',
-        url: 'http://localhost:4002/tvseries/' + `${_id}`,
+        // url: 'http://localhost:4002/tvseries/' + `${_id}`,
+        url: 'http://34.236.154.118:4002/tvseries/' + `${_id}`,
         data: updateTvSeries,
       })
         .then(({ data }) => {
@@ -140,7 +144,8 @@ const resolvers = {
 
       return axios({
         method: 'DELETE',
-        url: 'http://localhost:4002/tvseries/' + `${_id}`,
+        // url: 'http://localhost:4002/tvseries/' + `${_id}`,
+        url: 'http://34.236.154.118:4002/tvseries/' + `${_id}`,
       })
         .then(({ data }) => {
           redis.del('tvseries');

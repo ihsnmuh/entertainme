@@ -44,12 +44,14 @@ const resolvers = {
         if (!moviesCache && !seriesCache) {
           const movies = await axios({
             method: 'GET',
-            url: 'http://localhost:4001/movies',
+            // url: 'http://localhost:4001/movies',
+            url: 'http://3.83.244.245:4001/movies',
           });
 
           const tvSeries = await axios({
             method: 'GET',
-            url: 'http://localhost:4002/tvseries',
+            // url: 'http://localhost:4002/tvseries',
+            url: 'http://34.236.154.118:4002/tvseries',
           });
 
           await redis.set('movies', JSON.stringify(movies.data));
@@ -63,7 +65,8 @@ const resolvers = {
         } else if (!moviesCache) {
           const movies = await axios({
             method: 'GET',
-            url: 'http://localhost:4001/movies',
+            // url: 'http://localhost:4001/movies',
+            url: 'http://3.83.244.245:4001/movies',
           });
 
           await redis.set('movies', JSON.stringify(movies.data));
@@ -79,7 +82,8 @@ const resolvers = {
         } else if (!seriesCache) {
           const tvSeries = await axios({
             method: 'GET',
-            url: 'http://localhost:4002/tvseries',
+            // url: 'http://localhost:4002/tvseries',
+            url: 'http://34.236.154.118:4002/tvseries',
           });
 
           await redis.set('tvseries', JSON.stringify(tvSeries.data));
